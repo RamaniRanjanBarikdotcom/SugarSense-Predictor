@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SugarSense Predictor Chatbot</title>
+  <style>
+    :root {
+      --bg1: #ecfeff;
+      --bg2: #e0f2fe;
+      --card: #ffffff;
+      --text: #0f172a;
+      --accent: #0f766e;
+      --assistant: #f1f5f9;
+      --user: #ccfbf1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      background: linear-gradient(150deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .chat-shell {
+      width: min(760px, 95vw);
+      background: var(--card);
+      border-radius: 14px;
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 16px 20px;
+      background: #0f766e;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chat-header a {
+      color: #ffffff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .chat-header a:hover {
+      text-decoration: underline;
+    }
+
+    .chat-area {
+      height: 420px;
+      padding: 16px;
+      overflow-y: auto;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bubble {
+      max-width: 80%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .bubble.assistant {
+      background: var(--assistant);
+      align-self: flex-start;
+    }
+
+    .bubble.user {
+      background: var(--user);
+      align-self: flex-end;
+    }
+
+    .chat-input {
+      display: flex;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+    }
+
+    .chat-input button {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .chat-input button:hover {
+      background: #0d5f59;
+    }
+
+    @media (max-width: 640px) {
+      .chat-area {
+        height: 60vh;
+      }
+
+      .bubble {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="chat-shell">
+    <header class="chat-header">
+      <strong>SugarSense Predictor Chatbot</strong>
+      <a href="/">Back To Prediction Form</a>
+    </header>
+
+    <section class="chat-area" id="chatArea">
+      <div class="bubble assistant">Hello. Ask me about diabetes symptoms, prevention, diet, exercise, or how to use this app.</div>
+      <div class="bubble assistant">Important: I provide general information, not medical diagnosis.</div>
+    </section>
+
+    <form class="chat-input" id="chatForm">
+      <input id="userInput" type="text" maxlength="500" placeholder="Type your message here..." required>
+      <button type="submit">Send</button>
+    </form>
+  </main>
+
+  <script>
+    const chatArea = document.getElementById("chatArea");
+    const chatForm = document.getElementById("chatForm");
+    const userInput = document.getElementById("userInput");
+
+    function appendBubble(text, type) {
+      const div = document.createElement("div");
+      div.className = `bubble ${type}`;
+      div.textContent = text;
+      chatArea.appendChild(div);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    async function sendMessage(message) {
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await response.json();
+      appendBubble(data.reply || "Sorry, something went wrong.", "assistant");
+    }
+
+    chatForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = userInput.value.trim();
+      if (!message) {
+        return;
+      }
+
+      appendBubble(message, "user");
+      userInput.value = "";
+      userInput.focus();
+
+      try {
+        await sendMessage(message);
+      } catch (error) {
+        appendBubble("Unable to connect right now. Please try again.", "assistant");
+      }
+    });
+  </script>
+</body>
+</html>
