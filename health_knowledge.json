@@ -1,0 +1,446 @@
+{
+  "form_fields": [
+    {
+      "field": "Pregnancies",
+      "qa": [
+        {
+          "q": "What does Pregnancies mean in the form?",
+          "a": "It is the total number of times a person has been pregnant, including full-term pregnancies, miscarriages, and abortions. It ranges from 0 to 25 in this dataset."
+        },
+        {
+          "q": "Why does number of pregnancies matter for diabetes?",
+          "a": "Each pregnancy temporarily increases insulin resistance. Women who had gestational diabetes during any pregnancy are 7–10 times more likely to develop Type 2 diabetes later. More pregnancies mean more cumulative exposure to this insulin resistance effect."
+        },
+        {
+          "q": "What is a normal or typical value for Pregnancies?",
+          "a": "Most women in the dataset had 0–5 pregnancies. A value of 0 is perfectly normal. Values above 5 moderately increase risk. Values above 8 significantly raise the risk score."
+        },
+        {
+          "q": "Does number of pregnancies affect men?",
+          "a": "This dataset was collected only from female patients, so the pregnancy field applies only to biological females. If you are male, enter 0."
+        },
+        {
+          "q": "What is gestational diabetes?",
+          "a": "Gestational diabetes is a type of diabetes that develops during pregnancy and usually disappears after delivery. However, it strongly predicts future Type 2 diabetes — about 50% of women with gestational diabetes develop Type 2 within 10 years."
+        }
+      ]
+    },
+    {
+      "field": "Glucose",
+      "qa": [
+        {
+          "q": "What does Glucose mean in the form?",
+          "a": "It is the plasma glucose concentration measured 2 hours after drinking a 75g glucose solution during an oral glucose tolerance test (OGTT). It is measured in mg/dL (milligrams per deciliter)."
+        },
+        {
+          "q": "What is a normal glucose level for the OGTT test?",
+          "a": "Normal: below 140 mg/dL. Pre-diabetes: 140–199 mg/dL. Diabetes: 200 mg/dL or above. Fasting blood sugar (different test): Normal below 100 mg/dL, pre-diabetes 100–125, diabetes 126+."
+        },
+        {
+          "q": "Why is glucose the most important field for diabetes risk?",
+          "a": "Glucose directly measures how well your body processes sugar. High post-load glucose means your cells are resisting insulin or your pancreas is not producing enough. It is the primary diagnostic marker for diabetes."
+        },
+        {
+          "q": "What does a glucose level above 140 mean?",
+          "a": "Above 140 mg/dL (2-hour OGTT) indicates impaired glucose tolerance, also called pre-diabetes. This is a warning sign. Lifestyle changes at this stage can prevent full diabetes from developing."
+        },
+        {
+          "q": "What does a glucose level above 200 mean?",
+          "a": "A 2-hour OGTT value of 200 mg/dL or above, with symptoms like increased thirst, frequent urination, or blurred vision, confirms diabetes. Consult a doctor immediately."
+        },
+        {
+          "q": "What does a low glucose value mean?",
+          "a": "Very low glucose (below 70 mg/dL) is called hypoglycemia — low blood sugar. Symptoms include shakiness, sweating, confusion, and rapid heartbeat. It requires immediate treatment (fast-acting sugar like juice or glucose tablets)."
+        },
+        {
+          "q": "How can I lower my blood glucose naturally?",
+          "a": "Regular physical exercise, reducing refined carbohydrates and sugar, increasing fiber intake, managing stress, sleeping 7–8 hours, staying hydrated, and maintaining a healthy weight all help lower and regulate blood glucose over time."
+        }
+      ]
+    },
+    {
+      "field": "Blood Pressure",
+      "qa": [
+        {
+          "q": "What does Blood Pressure mean in the form?",
+          "a": "It is the diastolic blood pressure — the pressure in your arteries when your heart rests between beats. It is the lower number in a reading like 120/80 mmHg. It is measured in mmHg (millimeters of mercury)."
+        },
+        {
+          "q": "What is a normal diastolic blood pressure?",
+          "a": "Normal: below 80 mmHg. Elevated: 80–89 mmHg. Stage 1 hypertension: 80–89 mmHg. Stage 2 hypertension: 90 mmHg or above. The SugarSense form uses 60–80 mmHg as the healthy range."
+        },
+        {
+          "q": "What is the connection between blood pressure and diabetes?",
+          "a": "High blood pressure and diabetes frequently occur together and worsen each other. Insulin resistance causes blood vessels to narrow, raising blood pressure. High BP in turn accelerates kidney damage, nerve damage, and heart disease in people with diabetes."
+        },
+        {
+          "q": "What does a blood pressure of 90+ mmHg (diastolic) mean?",
+          "a": "It indicates Stage 2 hypertension. This significantly increases cardiovascular risk, especially combined with high glucose. You should consult a healthcare provider about treatment, which may include lifestyle changes and medications."
+        },
+        {
+          "q": "How can I lower my blood pressure without medication?",
+          "a": "Reduce sodium intake (less than 2300 mg/day), exercise regularly, lose excess weight, limit alcohol, quit smoking, manage stress through meditation or yoga, and eat a DASH diet rich in fruits, vegetables, and low-fat dairy."
+        },
+        {
+          "q": "What does a very low blood pressure mean?",
+          "a": "Diastolic below 60 mmHg can indicate hypotension (low blood pressure), which may cause dizziness, fainting, or shock. Some medications and dehydration cause this. It can also indicate underlying heart or hormonal issues."
+        }
+      ]
+    },
+    {
+      "field": "Skin Thickness",
+      "qa": [
+        {
+          "q": "What does Skin Thickness mean in the form?",
+          "a": "It is the triceps skin fold thickness, measured in millimeters by pinching the skin at the back of the upper arm. It is a proxy for body fat percentage and overall adiposity (body fat)."
+        },
+        {
+          "q": "What is a normal triceps skin fold thickness?",
+          "a": "Healthy range varies by sex and age. Generally: 10–25 mm for women, 10–18 mm for men. The SugarSense form accepts 0–100 mm. Values above 35 mm suggest higher body fat, which increases diabetes risk."
+        },
+        {
+          "q": "Why does skin thickness matter for diabetes prediction?",
+          "a": "Excess body fat, especially subcutaneous fat (measured by skin fold), is strongly linked to insulin resistance. Higher skin fold thickness indicates more body fat, which the ML model uses as a feature alongside BMI to estimate risk."
+        },
+        {
+          "q": "Is skin thickness the same as BMI?",
+          "a": "No. BMI is calculated from height and weight, while skin fold thickness directly measures subcutaneous fat. A person can have normal BMI but high skin fold thickness (skinny-fat) or high BMI with low skin fold (muscular). Both are captured in the model."
+        },
+        {
+          "q": "Can I measure skin thickness at home?",
+          "a": "Precise measurement requires a skinfold caliper. At home, pinch the skin at the back of your upper arm with your thumb and index finger, pull it away from the muscle, and measure with a ruler. A healthcare provider or gym trainer can measure it more accurately."
+        }
+      ]
+    },
+    {
+      "field": "Insulin",
+      "qa": [
+        {
+          "q": "What does Insulin mean in the form?",
+          "a": "It is the 2-hour serum insulin level measured during an oral glucose tolerance test. It shows how much insulin your pancreas secreted in response to a glucose load. It is measured in μU/mL (micro-units per milliliter)."
+        },
+        {
+          "q": "What is a normal 2-hour insulin level?",
+          "a": "Normal range: 16–166 μU/mL after a glucose load. Very low (<16) may suggest Type 1 diabetes or beta cell damage. Very high (>200) may indicate insulin resistance — your body is producing much more insulin than normal to compensate."
+        },
+        {
+          "q": "What does high insulin level mean?",
+          "a": "High insulin (hyperinsulinemia) usually means your cells are resisting insulin, so your pancreas compensates by producing more. This is a hallmark of Type 2 diabetes and metabolic syndrome. Over time, the pancreas may burn out, causing insulin levels to drop."
+        },
+        {
+          "q": "What does low insulin level mean?",
+          "a": "Very low insulin means your pancreas is not producing enough insulin. This is typical of Type 1 diabetes (autoimmune destruction of beta cells) or late-stage Type 2 where the pancreas has become exhausted. It always requires medical evaluation."
+        },
+        {
+          "q": "What is the difference between insulin resistance and insulin deficiency?",
+          "a": "Insulin resistance: cells don't respond to insulin properly — insulin is produced but ignored. Common in Type 2 diabetes and obesity. Insulin deficiency: not enough insulin is produced. This is the primary issue in Type 1 diabetes. Many Type 2 patients eventually develop both."
+        },
+        {
+          "q": "How can I improve my insulin sensitivity naturally?",
+          "a": "Regular aerobic exercise and strength training, reducing refined carbs and sugar, intermittent fasting, adequate sleep (7–9 hours), stress management, losing belly fat, eating more fiber and omega-3 fatty acids, and avoiding smoking all improve insulin sensitivity."
+        }
+      ]
+    },
+    {
+      "field": "BMI",
+      "qa": [
+        {
+          "q": "What is BMI and how is it calculated?",
+          "a": "BMI (Body Mass Index) = weight in kg ÷ (height in meters)². For example, someone who weighs 70 kg and is 1.75 m tall has BMI = 70 ÷ (1.75)² = 22.9. It is a quick measure of whether a person's weight is healthy for their height."
+        },
+        {
+          "q": "What are the BMI categories?",
+          "a": "Underweight: below 18.5. Normal weight: 18.5–24.9. Overweight: 25–29.9. Obese Class I: 30–34.9. Obese Class II: 35–39.9. Severely obese: 40+. The SugarSense form accepts values from 10 to 70."
+        },
+        {
+          "q": "How does BMI relate to diabetes risk?",
+          "a": "BMI above 25 significantly raises Type 2 diabetes risk. BMI above 30 roughly triples the risk compared to normal BMI. Every 1-unit increase in BMI above 25 raises diabetes risk by about 8–10%. However, BMI doesn't distinguish muscle from fat."
+        },
+        {
+          "q": "Can I have diabetes with a normal BMI?",
+          "a": "Yes. About 10–15% of people with Type 2 diabetes have normal BMI. This is called lean diabetes and is more common in South Asian populations. It often involves visceral (belly) fat not captured by BMI, along with genetic factors."
+        },
+        {
+          "q": "How much weight loss reduces diabetes risk?",
+          "a": "Losing just 5–7% of body weight (about 5 kg for a 70 kg person) can reduce Type 2 diabetes risk by 58% in high-risk individuals. Larger weight loss (10–15%) can lead to diabetes remission in some people already diagnosed."
+        },
+        {
+          "q": "What is a healthy BMI range?",
+          "a": "Generally 18.5–24.9. However, optimal BMI may vary by ethnicity — South Asians have higher metabolic risk at lower BMI values (risk starts at BMI 23). Athletes may have high BMI due to muscle. Always pair BMI with waist circumference for better assessment."
+        }
+      ]
+    },
+    {
+      "field": "Diabetes Pedigree Function",
+      "qa": [
+        {
+          "q": "What is the Diabetes Pedigree Function (DPF)?",
+          "a": "DPF is a score that estimates your genetic likelihood of developing diabetes based on your family history. It was developed by researchers and combines the diabetes status of first- and second-degree relatives, weighted by their age and closeness of relation to you."
+        },
+        {
+          "q": "What is a normal or typical DPF score?",
+          "a": "The dataset range is 0.078 to 2.42. Most values fall between 0.08 and 0.8. A score below 0.3 suggests low genetic risk. 0.3–0.7 is moderate. Above 0.7 indicates higher genetic risk from family history."
+        },
+        {
+          "q": "How is DPF calculated?",
+          "a": "DPF is calculated from your family pedigree — the number of relatives with diabetes, their relationship to you (parent, sibling, grandparent, aunt/uncle), and their age. Closer relatives with diabetes count more heavily. You can estimate it using online DPF calculators if you have your family history."
+        },
+        {
+          "q": "If my family has diabetes, does that mean I will get it?",
+          "a": "Not necessarily. Genetics increase your risk but are not destiny. Having a parent with Type 2 diabetes roughly doubles your risk, but lifestyle choices (diet, exercise, weight) have a stronger influence. Many people with high DPF never develop diabetes through healthy habits."
+        },
+        {
+          "q": "What should I do if I have a high Diabetes Pedigree Function?",
+          "a": "Get screened regularly (HbA1c or fasting glucose test annually), maintain a healthy weight, exercise regularly, eat a balanced diet, avoid smoking, and inform your doctor of your family history. Early intervention is highly effective."
+        },
+        {
+          "q": "Which genes are linked to diabetes?",
+          "a": "Type 2 diabetes is polygenic — many genes contribute. Key genes include TCF7L2, PPARG, FTO, KCNJ11, and NOTCH2. Type 1 diabetes is linked to HLA genes on chromosome 6. However, lifestyle factors interact with all these genes and can dramatically shift risk."
+        }
+      ]
+    },
+    {
+      "field": "Age",
+      "qa": [
+        {
+          "q": "Why is Age used as a diabetes risk factor?",
+          "a": "Diabetes risk increases with age because muscle mass decreases, making glucose storage harder. Pancreatic beta cells accumulate damage over decades. Hormonal changes reduce insulin sensitivity. Most Type 2 cases develop after age 40, though younger cases are rising."
+        },
+        {
+          "q": "At what age does diabetes risk significantly increase?",
+          "a": "Risk begins rising noticeably after age 35, and significantly after 45. The American Diabetes Association recommends diabetes screening for all adults 35+ regardless of symptoms. However, younger people with obesity, family history, or inactivity should be screened earlier."
+        },
+        {
+          "q": "Can young people get Type 2 diabetes?",
+          "a": "Yes, and it is becoming more common. Childhood and adolescent obesity is driving Type 2 diabetes in younger people. Young adults with BMI above 30, family history, or sedentary lifestyle should be screened. Teen-onset Type 2 often progresses faster than adult-onset."
+        },
+        {
+          "q": "What is the difference in diabetes risk by age group?",
+          "a": "Under 40: risk is low unless other risk factors present. 40–49: moderate risk increase. 50–59: risk roughly doubles compared to under 40. 60–69: high risk. Over 70: the highest risk group, though some develop natural compensatory mechanisms."
+        }
+      ]
+    }
+  ],
+  "diabetes_types": [
+    {
+      "q": "What is the difference between Type 1 and Type 2 diabetes?",
+      "a": "Type 1: autoimmune disease where the immune system destroys insulin-producing beta cells. Requires lifelong insulin therapy. Usually diagnosed in childhood or young adulthood. Accounts for 5–10% of cases. Type 2: the body doesn't use insulin effectively (insulin resistance). Managed with lifestyle, oral medications, or insulin. Accounts for 90–95% of all diabetes. Usually develops gradually in adults."
+    },
+    {
+      "q": "What is Type 2 diabetes?",
+      "a": "Type 2 diabetes is a chronic metabolic condition where blood sugar is chronically high because cells resist insulin and/or the pancreas cannot produce enough. It develops gradually, often going undiagnosed for years. It is strongly linked to obesity, inactivity, family history, and age."
+    },
+    {
+      "q": "What is pre-diabetes?",
+      "a": "Pre-diabetes means blood sugar is higher than normal but not yet in the diabetic range. HbA1c 5.7–6.4%, fasting glucose 100–125 mg/dL, or 2-hour glucose 140–199 mg/dL. About 88 million Americans have pre-diabetes. Without intervention, 15–30% develop Type 2 diabetes within 5 years. With lifestyle changes, risk drops dramatically."
+    },
+    {
+      "q": "What is gestational diabetes and who is at risk?",
+      "a": "Gestational diabetes (GDM) develops during pregnancy when hormones cause insulin resistance. Risk factors: obesity before pregnancy, previous GDM, family history of diabetes, age over 25, polycystic ovary syndrome (PCOS), and certain ethnicities (South Asian, Hispanic, Black, Pacific Islander). It usually resolves after delivery but increases future Type 2 risk."
+    },
+    {
+      "q": "What is MODY (Maturity-Onset Diabetes of the Young)?",
+      "a": "MODY is a rare form of diabetes caused by a single gene mutation, unlike Type 1 or Type 2. It usually appears before age 25 in people with a strong family history. It may require insulin or sulfonylurea tablets depending on the gene involved. It is often misdiagnosed as Type 1 or Type 2."
+    },
+    {
+      "q": "How is diabetes officially diagnosed?",
+      "a": "Diabetes is diagnosed by any one of these: (1) Fasting plasma glucose ≥126 mg/dL on two separate tests. (2) 2-hour oral glucose tolerance test ≥200 mg/dL. (3) HbA1c ≥6.5%. (4) Random glucose ≥200 mg/dL with classic symptoms. SugarSense gives a risk estimate, not a clinical diagnosis."
+    }
+  ],
+  "symptoms": [
+    {
+      "q": "What are the most common symptoms of Type 2 diabetes?",
+      "a": "Frequent urination (polyuria), excessive thirst (polydipsia), unexplained fatigue, blurred vision, slow-healing cuts or wounds, frequent infections (skin, gum, vaginal, urinary), tingling or numbness in hands and feet, darkened skin in body creases (acanthosis nigricans), and unintended weight loss in some cases."
+    },
+    {
+      "q": "Can you have diabetes without any symptoms?",
+      "a": "Yes. Type 2 diabetes often has no obvious symptoms for years — it is sometimes called a silent disease. Nearly 1 in 5 people with diabetes don't know they have it. This is why regular screening (HbA1c or fasting glucose) is critical for people over 35 or with risk factors."
+    },
+    {
+      "q": "What are the symptoms of low blood sugar (hypoglycemia)?",
+      "a": "Shakiness, sweating, rapid heartbeat (palpitations), anxiety, hunger, dizziness, pale skin, blurred vision, confusion, and in severe cases, loss of consciousness or seizures. Treat mild hypoglycemia with 15g of fast-acting sugar: 4 glucose tablets, 120 mL fruit juice, or 3–4 hard candies. Recheck glucose after 15 minutes."
+    },
+    {
+      "q": "What are the symptoms of high blood sugar (hyperglycemia)?",
+      "a": "Increased thirst and urination, fatigue, headache, blurred vision, difficulty concentrating, frequent infections, slow healing, and weight loss. Severe hyperglycemia can cause diabetic ketoacidosis (DKA) in Type 1 — symptoms include fruity breath, nausea, vomiting, and abdominal pain. DKA is a medical emergency."
+    },
+    {
+      "q": "What are diabetic emergency symptoms to watch for?",
+      "a": "Call 911 or emergency services immediately for: unconsciousness or inability to wake up, seizures, severe confusion, fruity-smelling breath (DKA sign), rapid breathing, extreme weakness, or blood sugar below 54 mg/dL that does not respond to treatment. These are life-threatening emergencies."
+    },
+    {
+      "q": "What is diabetic ketoacidosis (DKA)?",
+      "a": "DKA is a life-threatening complication mostly in Type 1 diabetes where the body breaks down fat for energy, producing ketones that make the blood acidic. Symptoms: extreme thirst, frequent urination, nausea, vomiting, abdominal pain, fruity breath, confusion, and difficulty breathing. Requires immediate hospital treatment with fluids and insulin."
+    }
+  ],
+  "prevention": [
+    {
+      "q": "Can Type 2 diabetes be prevented?",
+      "a": "Yes, in many cases. The landmark Diabetes Prevention Program trial showed that lifestyle intervention (5–7% weight loss + 150 min/week moderate exercise) reduced Type 2 diabetes incidence by 58% in high-risk individuals. This is more effective than medication (metformin reduced risk by only 31%)."
+    },
+    {
+      "q": "What are the most effective lifestyle changes to prevent diabetes?",
+      "a": "Lose 5–10% of body weight if overweight, exercise 150+ minutes per week, reduce refined carbs and added sugars, eat more fiber (vegetables, legumes, whole grains), quit smoking, limit alcohol, manage stress, sleep 7–9 hours per night, and get regular blood sugar screenings."
+    },
+    {
+      "q": "How much exercise prevents diabetes?",
+      "a": "At minimum, 150 minutes per week of moderate-intensity aerobic activity (brisk walking, swimming, cycling) plus 2 days of strength training. Breaking sedentary time with short 5-minute walks every hour also helps. Even 30 minutes of daily walking significantly lowers risk."
+    },
+    {
+      "q": "Can diet alone prevent Type 2 diabetes?",
+      "a": "Diet is the single most powerful factor. A Mediterranean diet or DASH diet rich in vegetables, whole grains, legumes, olive oil, nuts, and fish — with minimal processed foods, red meat, and sugar — has been shown to reduce diabetes risk by 20–40% independent of weight loss."
+    },
+    {
+      "q": "Does quitting smoking reduce diabetes risk?",
+      "a": "Yes. Smokers have 30–40% higher risk of developing Type 2 diabetes than non-smokers. Nicotine impairs insulin secretion and increases insulin resistance. Quitting smoking reduces this risk over time, though ex-smokers may have slightly elevated risk for a few years due to initial weight gain."
+    },
+    {
+      "q": "How does sleep affect diabetes risk?",
+      "a": "Poor sleep (less than 6 hours or more than 9 hours per night) significantly raises diabetes risk. Sleep deprivation increases cortisol and ghrelin (hunger hormone), disrupts insulin sensitivity, raises blood glucose, and promotes overeating. Treating sleep apnea also improves blood sugar control in people with diabetes."
+    }
+  ],
+  "diet_nutrition": [
+    {
+      "q": "What is the best diet for diabetes or diabetes prevention?",
+      "a": "No single diet fits all, but these are evidence-based approaches: Mediterranean diet (olive oil, fish, vegetables, legumes), DASH diet (low sodium, high potassium), low-glycemic diet, and plant-based diet. All emphasize minimally processed whole foods and limited added sugars."
+    },
+    {
+      "q": "What foods should I avoid with diabetes or high diabetes risk?",
+      "a": "Sugary drinks (soda, juice, energy drinks), white bread and refined grains, white rice, sweets and desserts, fried foods, processed meats (sausage, bacon, hot dogs), full-fat dairy in excess, packaged snacks, and alcohol in excess. These spike blood sugar and worsen insulin resistance."
+    },
+    {
+      "q": "What foods help lower blood sugar?",
+      "a": "Non-starchy vegetables (leafy greens, broccoli, peppers), legumes (lentils, chickpeas, beans), whole grains (oats, quinoa, barley), fatty fish (salmon, mackerel, sardines), nuts and seeds, berries, avocado, eggs, Greek yogurt, apple cider vinegar, cinnamon, and bitter melon all help regulate blood sugar."
+    },
+    {
+      "q": "What is the glycemic index and why does it matter?",
+      "a": "The glycemic index (GI) ranks foods by how quickly they raise blood sugar. Low GI (below 55): lentils, oats, sweet potato, most fruits. Medium GI (56–69): brown rice, whole wheat bread. High GI (70+): white bread, white rice, corn flakes, potatoes. People with diabetes or pre-diabetes benefit from choosing low-GI foods."
+    },
+    {
+      "q": "How many carbohydrates should a diabetic eat per day?",
+      "a": "This varies by individual. A general starting point for many people with Type 2 diabetes is 45–60 grams of carbohydrates per meal (135–180 g/day). Some follow lower-carb diets (50–100 g/day) for better control. Work with a registered dietitian to personalize this for your weight, activity, and medications."
+    },
+    {
+      "q": "Is fruit safe to eat with diabetes?",
+      "a": "Yes, most fruits are safe in moderate portions. Fruits provide fiber, vitamins, and antioxidants. Better choices: berries (lowest sugar), apples, pears, citrus, peaches, plums. Limit: grapes, bananas, mangoes, watermelon (higher glycemic). Eat whole fruit, not juice. A typical serving is 1 small fruit or 1/2 cup berries."
+    },
+    {
+      "q": "Should people with diabetes avoid all sugar?",
+      "a": "Not necessarily all sugar, but added sugars should be minimized. Natural sugars in whole fruits and dairy come with fiber and nutrients that slow absorption. The real culprits are added sugars in processed foods, sodas, and desserts. The American Diabetes Association recommends less than 6 teaspoons (25g) of added sugar per day."
+    },
+    {
+      "q": "Is intermittent fasting helpful for diabetes?",
+      "a": "Intermittent fasting (eating within a defined window like 8 hours per day) can improve insulin sensitivity, aid weight loss, and lower blood sugar in some people with Type 2 diabetes. However, people on insulin or certain medications risk hypoglycemia while fasting. Always consult your doctor before starting intermittent fasting if you have diabetes."
+    },
+    {
+      "q": "Is alcohol safe with diabetes?",
+      "a": "Moderate alcohol (up to 1 drink/day for women, 2 for men) is generally acceptable but risky for people on insulin or sulfonylureas as it can cause severe hypoglycemia. Alcohol is also high in calories, promotes weight gain, and can raise triglycerides. Avoid sweet wines, cocktails, and mixers. Never drink on an empty stomach."
+    }
+  ],
+  "exercise": [
+    {
+      "q": "How much exercise is recommended for managing or preventing diabetes?",
+      "a": "At least 150 minutes of moderate aerobic exercise per week (30 minutes, 5 days/week) plus 2–3 sessions of resistance training per week. Spreading exercise over the week is better than all at once. Even short 10-minute walks after meals effectively lower postprandial blood sugar."
+    },
+    {
+      "q": "What types of exercise are best for diabetes?",
+      "a": "Aerobic: brisk walking, cycling, swimming, dancing, jogging. Strength training: weight machines, free weights, resistance bands, bodyweight exercises (squats, push-ups). Flexibility: yoga, stretching (reduces stress and improves circulation). Yoga and tai chi are especially beneficial for blood sugar control and stress reduction."
+    },
+    {
+      "q": "Does exercise lower blood sugar immediately?",
+      "a": "Yes. Aerobic exercise causes muscles to absorb glucose directly without insulin, lowering blood sugar within minutes. The effect can last 24–48 hours after exercise. Strength training also improves long-term insulin sensitivity by increasing muscle mass (muscles are the body's primary glucose storage site)."
+    },
+    {
+      "q": "Is it safe to exercise with diabetes?",
+      "a": "Generally yes and highly recommended. Key precautions: check blood sugar before and after exercise, carry fast-acting carbs in case of hypoglycemia, stay hydrated, wear proper footwear to avoid foot injuries, and gradually increase intensity. People on insulin may need to adjust dose on exercise days — consult your doctor."
+    },
+    {
+      "q": "How does sitting for long periods affect diabetes risk?",
+      "a": "Prolonged sitting (more than 8 hours/day) raises diabetes risk even in people who exercise regularly. Sitting impairs glucose metabolism and insulin sensitivity. Breaking up sitting with 5 minutes of movement every hour significantly improves blood sugar levels. Use a standing desk, walk during calls, and set hourly movement reminders."
+    }
+  ],
+  "blood_sugar_monitoring": [
+    {
+      "q": "What is HbA1c and why is it important?",
+      "a": "HbA1c (glycated hemoglobin or A1C) reflects average blood sugar over the past 2–3 months. It measures the percentage of hemoglobin coated with sugar. Normal: below 5.7%. Pre-diabetes: 5.7–6.4%. Diabetes: 6.5% or above. Most people with Type 2 diabetes aim for below 7% to prevent complications."
+    },
+    {
+      "q": "What are target blood sugar levels for people with diabetes?",
+      "a": "General targets (consult your doctor for personal targets): Fasting: 80–130 mg/dL. 2 hours after meals: below 180 mg/dL. HbA1c: below 7% for most adults. These targets may be adjusted based on age, other conditions, and medication."
+    },
+    {
+      "q": "How often should I check my blood sugar at home?",
+      "a": "Frequency depends on your treatment: Type 1: 4–10 times daily (before meals, after meals, bedtime). Type 2 on insulin: 2–4 times daily. Type 2 on oral medications or diet only: as directed by your doctor, often 1–2 times per week or when symptoms occur. Continuous Glucose Monitors (CGMs) can automate this."
+    },
+    {
+      "q": "What is a continuous glucose monitor (CGM)?",
+      "a": "A CGM is a small sensor worn on the skin that continuously measures glucose levels every 1–5 minutes and sends readings to a smartphone or receiver. Examples: Dexcom G7, FreeStyle Libre. CGMs reduce hypoglycemia risk, improve HbA1c, and eliminate most finger-stick tests."
+    }
+  ],
+  "complications": [
+    {
+      "q": "What are the long-term complications of uncontrolled diabetes?",
+      "a": "Cardiovascular disease (heart attack, stroke — leading cause of death), diabetic neuropathy (nerve damage causing pain/numbness in feet and hands), diabetic nephropathy (kidney disease, leading cause of kidney failure), diabetic retinopathy (eye disease, leading cause of adult blindness), peripheral artery disease (poor circulation), foot ulcers and amputations."
+    },
+    {
+      "q": "How can diabetes complications be prevented?",
+      "a": "Maintain good blood sugar control (HbA1c below 7%), manage blood pressure (below 130/80), control LDL cholesterol (below 100 mg/dL), quit smoking, exercise regularly, maintain healthy weight, get annual eye exams, foot exams, and kidney function tests, and take prescribed medications consistently."
+    },
+    {
+      "q": "What is diabetic neuropathy?",
+      "a": "Diabetic neuropathy is nerve damage caused by prolonged high blood sugar. Most commonly affects the feet and legs (peripheral neuropathy), causing burning, tingling, numbness, or pain. It can also affect the digestive system (gastroparesis), heart rate, and bladder. Good blood sugar control is the best prevention."
+    },
+    {
+      "q": "What is diabetic retinopathy?",
+      "a": "Diabetic retinopathy is damage to blood vessels in the retina (back of the eye) caused by high blood sugar. It is the leading cause of new blindness in working-age adults. It often has no symptoms until advanced. Annual dilated eye exams can catch it early. Laser treatment can prevent severe vision loss."
+    },
+    {
+      "q": "How does diabetes affect the kidneys?",
+      "a": "High blood sugar damages the filtering units (nephrons) in kidneys over time. Early signs include protein in urine (proteinuria). Advanced damage leads to chronic kidney disease and eventual kidney failure requiring dialysis or transplant. ACE inhibitors/ARBs and SGLT2 inhibitors can protect kidneys in people with diabetes."
+    }
+  ],
+  "medications_and_treatment": [
+    {
+      "q": "What medications are used to treat Type 2 diabetes?",
+      "a": "Common medications include: Metformin (first-line, lowers liver glucose production), SGLT2 inhibitors (Jardiance, Farxiga — also protect heart and kidneys), GLP-1 agonists (Ozempic, Victoza — also aid weight loss), DPP-4 inhibitors (Januvia, Tradjenta), sulfonylureas (Glipizide, Glimepiride), and insulin (multiple types for different needs). A doctor prescribes based on individual factors."
+    },
+    {
+      "q": "Is insulin only for Type 1 diabetes?",
+      "a": "No. Insulin is used in Type 1, Type 2, and gestational diabetes. In Type 2, insulin is often started when other medications cannot keep blood sugar controlled, typically after 10–15 years of the disease as the pancreas loses capacity. Modern insulin delivery (pens, pumps, smart devices) has made it much easier to use."
+    },
+    {
+      "q": "Can diabetes be reversed or cured?",
+      "a": "Type 1 cannot currently be cured (though research into artificial pancreas and stem cell therapies is promising). Type 2 can be put into remission — normal blood sugar without medications — through substantial weight loss (15+ kg), bariatric surgery, or very low-calorie diets. This is not a permanent cure and requires maintaining lifestyle changes."
+    },
+    {
+      "q": "What is Ozempic and is it a diabetes drug?",
+      "a": "Ozempic (semaglutide) is a GLP-1 receptor agonist originally approved for Type 2 diabetes management. It reduces blood sugar, promotes weight loss, and reduces cardiovascular risk. The same drug at higher dose is sold as Wegovy specifically for obesity. It is a prescription medication and should only be used under medical supervision."
+    }
+  ],
+  "about_sugarsense": [
+    {
+      "q": "How does the SugarSense prediction work?",
+      "a": "SugarSense uses a Support Vector Machine (SVM) classifier trained on the Pima Indians Diabetes Dataset (768 female patients from the Pima Indian population in Arizona, USA). You enter 8 health values, the model scales them using a StandardScaler, and the SVM predicts Diabetic (1) or Non-Diabetic (0) based on patterns learned from the training data."
+    },
+    {
+      "q": "Is the SugarSense prediction a medical diagnosis?",
+      "a": "No. SugarSense is a screening tool and educational app — not a medical device or diagnostic tool. The model has approximately 77–78% accuracy on test data, which is reasonable for a screening tool but not sufficient for clinical decision-making. Always consult a qualified healthcare provider for actual diagnosis and treatment."
+    },
+    {
+      "q": "What should I do if SugarSense predicts Diabetic?",
+      "a": "Do not panic. Book an appointment with your doctor to get proper blood tests: fasting glucose, HbA1c, and oral glucose tolerance test. A prediction of Diabetic means your risk profile resembles diabetic patients in the training data. Only clinical tests can confirm or rule out diabetes."
+    },
+    {
+      "q": "What should I do if SugarSense predicts Non-Diabetic?",
+      "a": "A Non-Diabetic result is reassuring but not a guarantee. Continue healthy lifestyle habits, get regular checkups, and be aware of risk factors. If you have symptoms like frequent urination, excessive thirst, or blurred vision, see a doctor regardless of the app result."
+    },
+    {
+      "q": "What is the Pima Indians Diabetes Dataset?",
+      "a": "The Pima Indians Diabetes Dataset is a well-known medical dataset collected by the National Institute of Diabetes and Digestive and Kidney Diseases. It contains data from 768 adult female patients of Pima Indian heritage from Arizona, USA — a population with one of the highest rates of Type 2 diabetes in the world. The dataset records 8 health measurements and whether each patient was diagnosed with diabetes."
+    },
+    {
+      "q": "Why is the visual risk score different from the ML prediction?",
+      "a": "The gauge percentage and the Diabetic/Non-Diabetic label come from two separate calculations. The ML model (SVM) does binary classification based on patterns it learned. The gauge score is a simple weighted sum of individual risk factors (glucose, BMI, age, etc.) to give a visual representation of overall risk intensity. They may sometimes disagree."
+    }
+  ]
+}
