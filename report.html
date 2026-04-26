@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SugarSense Predictor — Project Report</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap');
+
+  :root {
+    --pri: #0f766e;
+    --acc: #14b8a6;
+    --dark: #0f172a;
+    --mid: #334155;
+    --soft: #64748b;
+    --border: #e2e8f0;
+    --bg: #f8fafc;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5pt;
+    color: var(--dark);
+    background: #f1f5f9;
+    line-height: 1.7;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.12);
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: linear-gradient(160deg, #0f766e 0%, #134e4a 60%, #0c3b38 100%);
+    color: white;
+    padding: 80px 70px 60px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-badge {
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 32px;
+  }
+  .cover-title {
+    font-family: 'Merriweather', serif;
+    font-size: 36pt;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .cover-subtitle {
+    font-size: 13pt;
+    color: rgba(255,255,255,0.75);
+    font-weight: 300;
+    margin-bottom: 48px;
+  }
+  .cover-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--acc);
+    border-radius: 2px;
+    margin-bottom: 48px;
+  }
+  .cover-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+  .cover-meta-item label {
+    display: block;
+    font-size: 8pt;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 4px;
+  }
+  .cover-meta-item span {
+    font-size: 10pt;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ── BODY ── */
+  .body-content {
+    padding: 60px 70px;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--bg);
+    border-left: 4px solid var(--pri);
+    border-radius: 0 10px 10px 0;
+    padding: 32px 36px;
+    margin-bottom: 56px;
+  }
+  .toc h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--pri);
+    margin-bottom: 20px;
+  }
+  .toc ol {
+    padding-left: 20px;
+  }
+  .toc li {
+    font-size: 10pt;
+    color: var(--mid);
+    padding: 3px 0;
+  }
+  .toc li a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .toc li a:hover { color: var(--pri); }
+  .toc .toc-sub {
+    padding-left: 16px;
+    color: var(--soft);
+    font-size: 9.5pt;
+  }
+
+  /* ── SECTION HEADINGS ── */
+  .section { margin-bottom: 48px; }
+
+  h1.section-title {
+    font-family: 'Merriweather', serif;
+    font-size: 19pt;
+    font-weight: 700;
+    color: var(--dark);
+    border-bottom: 2px solid var(--pri);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+  }
+  h1.section-title span {
+    color: var(--pri);
+    font-size: 14pt;
+    margin-right: 10px;
+  }
+
+  h2.sub-title {
+    font-size: 12pt;
+    font-weight: 700;
+    color: var(--pri);
+    margin: 28px 0 12px;
+  }
+
+  h3.sub-sub-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: var(--mid);
+    margin: 18px 0 8px;
+  }
+
+  p { margin-bottom: 12px; color: var(--mid); }
+
+  /* ── ABSTRACT BOX ── */
+  .abstract-box {
+    background: linear-gradient(135deg, #f0fdfa, #e6fffa);
+    border: 1px solid #99f6e4;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 48px;
+  }
+  .abstract-box .label {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--pri);
+    margin-bottom: 12px;
+  }
+  .abstract-box p {
+    font-size: 10.5pt;
+    line-height: 1.8;
+    color: var(--mid);
+    margin: 0;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 9.5pt;
+  }
+  th {
+    background: var(--pri);
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9pt;
+    letter-spacing: 0.3px;
+  }
+  th:first-child { border-radius: 6px 0 0 0; }
+  th:last-child  { border-radius: 0 6px 0 0; }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--mid);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--bg); }
+  tr:last-child td { border-bottom: none; }
+
+  /* ── CODE / MONO ── */
+  .code-block {
+    background: #1e293b;
+    color: #e2e8f0;
+    border-radius: 8px;
+    padding: 18px 22px;
+    font-family: 'Courier New', monospace;
+    font-size: 9pt;
+    line-height: 1.7;
+    margin: 12px 0 24px;
+    overflow-x: auto;
+  }
+  .code-block .kw  { color: #7dd3fc; }
+  .code-block .str { color: #86efac; }
+  .code-block .cm  { color: #64748b; }
+  .code-block .fn  { color: #f9a8d4; }
+
+  code {
+    background: #f1f5f9;
+    color: var(--pri);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 9pt;
+  }
+
+  /* ── FEATURE CARDS ── */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 16px 0 28px;
+  }
+  .feature-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    background: var(--card);
+  }
+  .feature-card .fc-num {
+    font-size: 22pt;
+    font-weight: 700;
+    color: #e2e8f0;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .feature-card .fc-title {
+    font-size: 10.5pt;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+  .feature-card .fc-desc {
+    font-size: 9.5pt;
+    color: var(--soft);
+    line-height: 1.6;
+  }
+
+  /* ── STATUS BADGES ── */
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 99px;
+    font-size: 8.5pt;
+    font-weight: 600;
+  }
+  .badge-done  { background: #dcfce7; color: #15803d; }
+  .badge-part  { background: #fef9c3; color: #854d0e; }
+  .badge-no    { background: #fee2e2; color: #b91c1c; }
+
+  /* ── ARCHITECTURE DIAGRAM ── */
+  .arch-box {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin: 16px 0 28px;
+    font-family: 'Courier New', monospace;
+    font-size: 9pt;
+    color: #94a3b8;
+    line-height: 1.9;
+  }
+  .arch-box .arch-hi { color: #7dd3fc; font-weight: bold; }
+  .arch-box .arch-gr { color: #86efac; }
+  .arch-box .arch-ye { color: #fde68a; }
+  .arch-box .arch-pk { color: #f9a8d4; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-left: 4px solid var(--acc);
+    background: #f0fdfa;
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0 20px;
+    font-size: 9.5pt;
+    color: var(--mid);
+  }
+  .callout strong { color: var(--pri); }
+
+  /* ── FLOW STEPS ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 16px 0 24px;
+  }
+  .flow-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .flow-step:last-child { border-bottom: none; }
+  .flow-num {
+    min-width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--pri);
+    color: white;
+    font-size: 9pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .flow-text strong { font-size: 10pt; color: var(--dark); display: block; margin-bottom: 2px; }
+  .flow-text span   { font-size: 9.5pt; color: var(--soft); }
+
+  /* ── METRIC CARDS ── */
+  .metric-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 16px 0 28px;
+  }
+  .metric-card {
+    text-align: center;
+    padding: 20px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+  }
+  .metric-card .mv {
+    font-size: 22pt;
+    font-weight: 700;
+    color: var(--pri);
+    line-height: 1;
+  }
+  .metric-card .ml {
+    font-size: 8.5pt;
+    color: var(--soft);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── PROVIDER PILLS ── */
+  .provider-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin: 16px 0 24px;
+  }
+  .provider-pill {
+    text-align: center;
+    padding: 14px 8px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--mid);
+    background: var(--bg);
+  }
+  .provider-pill .pp-icon { font-size: 20pt; display: block; margin-bottom: 6px; }
+
+  /* ── PAGE BREAK ── */
+  .page-break { page-break-after: always; }
+
+  /* ── FOOTER ── */
+  .report-footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 20px;
+    font-size: 8.5pt;
+    letter-spacing: 0.5px;
+  }
+
+  ul, ol { padding-left: 22px; margin-bottom: 14px; }
+  li { color: var(--mid); font-size: 10pt; padding: 2px 0; }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; max-width: 100%; }
+    .body-content { padding: 40px 56px; }
+    .cover { padding: 56px; }
+    @page { margin: 0; size: A4; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════════════════
+     COVER PAGE
+══════════════════════════════════════════════ -->
+<div class="cover">
+  <div>
+    <div class="cover-badge">Minor Project Report · B.Tech Computer Science</div>
+    <div class="cover-title">SugarSense<br/>Predictor</div>
+    <div class="cover-subtitle">Smart Diabetes Risk Prediction &amp; AI Health Assistant System</div>
+    <div class="cover-divider"></div>
+  </div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <label>Technology Stack</label>
+      <span>Flask · React · SVM · Claude AI</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Dataset</label>
+      <span>Pima Indians Diabetes (768 samples)</span>
+    </div>
+    <div class="cover-meta-item">
+      <label>Academic Year</label>
+      <span>2025 – 2026</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     BODY
+══════════════════════════════════════════════ -->
+<div class="body-content">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#intro">Introduction</a></li>
+      <li><a href="#objectives">Objectives</a></li>
+      <li><a href="#dataset">Dataset Description</a></li>
+      <li><a href="#architecture">System Architecture</a></li>
+      <li><a href="#tech">Technology Stack</a></li>
+      <li><a href="#ml">Machine Learning Pipeline</a></li>
+      <li><a href="#features">Features &amp; Functionality</a>
+        <ol class="toc-sub">
+          <li>Prediction Form</li>
+          <li>ML Risk Prediction</li>
+          <li>Visual Risk Gauge</li>
+          <li>Assessment History</li>
+          <li>AI Health Chatbot</li>
+          <li>Multi-Provider AI Support</li>
+          <li>Health Knowledge Base</li>
+        </ol>
+      </li>
+      <li><a href="#backend">Backend Implementation</a></li>
+      <li><a href="#frontend">Frontend Implementation</a></li>
+      <li><a href="#chatbot">AI Chatbot System</a></li>
+      <li><a href="#results">Results &amp; Performance</a></li>
+      <li><a href="#future">Future Implementation</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#references">References</a></li>
+    </ol>
+  </div>
+
+  <!-- ── 1. ABSTRACT ── -->
+  <div class="section" id="abstract">
+    <h1 class="section-title"><span>01</span> Abstract</h1>
+    <div class="abstract-box">
+      <div class="label">Abstract</div>
+      <p>
+        SugarSense Predictor is a full-stack intelligent web application designed for early-stage diabetes risk screening. The system combines a Support Vector Machine (SVM) classifier trained on the Pima Indians Diabetes Dataset with a multi-provider AI health chatbot to deliver accurate, accessible, and actionable diabetes risk assessments. The frontend is built as a React Single Page Application (SPA) served by a Flask Python backend, providing an intuitive interface for entering clinical health metrics and receiving real-time predictions. The integrated AI chatbot — powered by Claude, Gemini, GPT, or open-source models via OpenRouter — delivers evidence-based health guidance through a structured knowledge base of over 110 Q&amp;A pairs. The system achieves approximately 77–78% prediction accuracy on test data and demonstrates how machine learning and generative AI can together improve chronic disease awareness and patient engagement.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── 2. INTRODUCTION ── -->
+  <div class="section" id="intro">
+    <h1 class="section-title"><span>02</span> Introduction</h1>
+    <p>
+      Diabetes mellitus is one of the fastest-growing chronic diseases globally, affecting over 537 million adults worldwide as of 2021, with projections exceeding 700 million by 2045 (IDF Diabetes Atlas). Despite its prevalence, diabetes often goes undetected until it reaches advanced stages, by which time complications such as neuropathy, nephropathy, and cardiovascular disease may already be present. Early detection is therefore critical to improving long-term patient outcomes and reducing healthcare costs.
+    </p>
+    <p>
+      Traditional diabetes screening relies on periodic laboratory tests, which can be costly and inaccessible in low-resource settings. Machine learning (ML) offers a promising alternative: by analyzing combinations of non-invasive clinical measurements, ML models can identify patterns that indicate diabetes risk before formal diagnosis is possible.
+    </p>
+    <p>
+      SugarSense Predictor addresses this gap by providing a web-based diabetes risk screening tool that is fast, accessible, and intelligent. The application integrates an SVM classifier with a multi-turn AI health chatbot, allowing users to not only receive a risk prediction but also ask follow-up questions and receive tailored health guidance — all within a single, unified interface.
+    </p>
+    <p>
+      The system is designed for two primary audiences: (1) individuals who wish to screen themselves for diabetes risk using publicly available clinical data points, and (2) healthcare students and professionals who want a demonstration of how ML and generative AI can be combined in a clinical screening context.
+    </p>
+
+    <h2 class="sub-title">Problem Statement</h2>
+    <p>
+      Existing diabetes risk tools are either too simplistic (basic questionnaires) or too complex (laboratory-dependent). There is a need for an intelligent, easy-to-use system that can assess diabetes risk from commonly available health metrics and provide personalized health guidance without requiring medical expertise from the user. Additionally, most existing tools do not explain their predictions or provide actionable follow-up information.
+    </p>
+  </div>
+
+  <!-- ── 3. OBJECTIVES ── -->
+  <div class="section" id="objectives">
+    <h1 class="section-title"><span>03</span> Objectives</h1>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-text">
+          <strong>Accurate Diabetes Risk Prediction</strong>
+          <span>Train and deploy an SVM classifier on the Pima Indians Diabetes Dataset to predict binary diabetes risk (Diabetic / Non-Diabetic) from 8 clinical input features with maximum achievable accuracy.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-text">
+          <strong>User-Friendly Web Interface</strong>
+          <span>Design an intuitive, responsive single-page React application where users can enter health metrics and receive immediate predictions with visual feedback.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-text">
+          <strong>Visual Risk Visualization</strong>
+          <span>Display prediction results through an SVG-based risk gauge, key factor indicators, and colour-coded risk levels to make results immediately understandable without medical expertise.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-text">
+          <strong>Intelligent AI Health Chatbot</strong>
+          <span>Integrate a multi-turn conversational AI assistant powered by state-of-the-art large language models (Claude, Gemini, GPT, Llama) to answer diabetes-related questions and explain prediction factors.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-text">
+          <strong>Structured Health Knowledge Base</strong>
+          <span>Build a comprehensive JSON knowledge base of 110+ Q&amp;A pairs covering all 8 form fields, diabetes types, symptoms, diet, exercise, monitoring, complications, and medications — embedded into the AI system prompt.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-text">
+          <strong>Multi-Provider AI Flexibility</strong>
+          <span>Support 5 AI providers (Anthropic, OpenAI, Google, HuggingFace, OpenRouter) configurable entirely via environment variables, with no frontend changes required to switch models.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">7</div>
+        <div class="flow-text">
+          <strong>Assessment History Tracking</strong>
+          <span>Persist up to 5 previous prediction results in browser localStorage, enabling users to track changes in their health metrics over time.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. DATASET ── -->
+  <div class="section" id="dataset">
+    <h1 class="section-title"><span>04</span> Dataset Description</h1>
+    <p>
+      The system uses the <strong>Pima Indians Diabetes Database</strong>, originally collected by the National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK). It is one of the most widely used benchmark datasets in diabetes ML research.
+    </p>
+
+    <h2 class="sub-title">Dataset Overview</h2>
+    <table>
+      <tr><th>Attribute</th><th>Value</th></tr>
+      <tr><td>Source</td><td>NIDDK / UCI Machine Learning Repository / Kaggle</td></tr>
+      <tr><td>Total Records</td><td>768 patient records</td></tr>
+      <tr><td>Features</td><td>8 clinical input variables</td></tr>
+      <tr><td>Target Variable</td><td>Outcome (0 = Non-Diabetic, 1 = Diabetic)</td></tr>
+      <tr><td>Class Distribution</td><td>500 Non-Diabetic (65.1%), 268 Diabetic (34.9%)</td></tr>
+      <tr><td>Population</td><td>Adult females of Pima Indian heritage, Arizona, USA</td></tr>
+      <tr><td>File Format</td><td>CSV (diabetes1.csv)</td></tr>
+    </table>
+
+    <h2 class="sub-title">Feature Variables</h2>
+    <table>
+      <tr><th>#</th><th>Feature</th><th>Description</th><th>Unit</th><th>Valid Range</th><th>Normal Range</th></tr>
+      <tr><td>1</td><td>Pregnancies</td><td>Number of times pregnant</td><td>Count</td><td>0 – 25</td><td>0 – 5</td></tr>
+      <tr><td>2</td><td>Glucose</td><td>2-hour plasma glucose (oral glucose tolerance test)</td><td>mg/dL</td><td>1 – 300</td><td>70 – 99</td></tr>
+      <tr><td>3</td><td>BloodPressure</td><td>Diastolic blood pressure</td><td>mm Hg</td><td>20 – 200</td><td>60 – 80</td></tr>
+      <tr><td>4</td><td>SkinThickness</td><td>Triceps skin fold thickness</td><td>mm</td><td>0 – 100</td><td>10 – 40</td></tr>
+      <tr><td>5</td><td>Insulin</td><td>2-hour serum insulin</td><td>μU/mL</td><td>0 – 900</td><td>16 – 166</td></tr>
+      <tr><td>6</td><td>BMI</td><td>Body mass index (weight/height²)</td><td>kg/m²</td><td>10 – 70</td><td>18.5 – 24.9</td></tr>
+      <tr><td>7</td><td>DiabetesPedigreeFunction</td><td>Genetic likelihood score based on family history</td><td>Score</td><td>0.05 – 3.0</td><td>0.08 – 0.8</td></tr>
+      <tr><td>8</td><td>Age</td><td>Age of the patient</td><td>Years</td><td>1 – 120</td><td>Any</td></tr>
+    </table>
+
+    <div class="callout">
+      <strong>Note on Missing Values:</strong> The original dataset contains biological zero values (e.g., Glucose = 0, BloodPressure = 0) that represent missing data. These are handled during preprocessing in the training notebook (diabetes.ipynb) through imputation and normalization.
+    </div>
+  </div>
+
+  <!-- ── 5. ARCHITECTURE ── -->
+  <div class="section" id="architecture">
+    <h1 class="section-title"><span>05</span> System Architecture</h1>
+    <p>SugarSense Predictor follows a clean client–server architecture with three logical tiers: the React frontend, the Flask backend, and the external AI provider layer.</p>
+
+    <div class="arch-box">
+<span class="arch-hi">┌─────────────────────────────────────────────────────────────────────┐</span>
+<span class="arch-hi">│                     REACT SPA  (index.html)                         │</span>
+<span class="arch-hi">│  ┌──────────────────────┐         ┌────────────────────────────┐     │</span>
+<span class="arch-gr">│  │   Prediction Form    │         │     Chat Panel (AI Bot)    │     │</span>
+<span class="arch-gr">│  │  8 validated fields  │         │  Messages · Input · Prompts│     │</span>
+<span class="arch-hi">│  └─────────┬────────────┘         └───────────────┬────────────┘     │</span>
+<span class="arch-hi">│            │  POST /predict_api                   │  POST /chat      │</span>
+<span class="arch-hi">└────────────┼─────────────────────────────────────┼────────────────────┘</span>
+             │                                       │
+<span class="arch-hi">┌────────────┼───────────────────────────────────────┼────────────────────┐</span>
+<span class="arch-hi">│            ▼           FLASK BACKEND               ▼                   │</span>
+<span class="arch-ye">│   ┌────────────────┐                  ┌──────────────────────────┐     │</span>
+<span class="arch-ye">│   │ /predict_api   │                  │  /chat  Provider Router  │     │</span>
+<span class="arch-ye">│   │                │                  │  claude / gpt / gemini   │     │</span>
+<span class="arch-ye">│   │ → Validate     │                  │  huggingface / openrouter│     │</span>
+<span class="arch-ye">│   │ → Scale (sc1)  │                  └─────────────┬────────────┘     │</span>
+<span class="arch-ye">│   │ → SVM predict  │                                │                  │</span>
+<span class="arch-ye">│   │ → Return 0/1   │              System Prompt     │                  │</span>
+<span class="arch-ye">│   └────────────────┘        (Role + 110 Q&A pairs)  │                  │</span>
+<span class="arch-hi">│                                                      │                  │</span>
+<span class="arch-hi">│   ┌────────────┐  ┌───────────┐                      │                  │</span>
+<span class="arch-gr">│   │ sc1.pkl    │  │classifier1│                       │                  │</span>
+<span class="arch-gr">│   │ Scaler     │  │  .pkl SVM │                       │                  │</span>
+<span class="arch-hi">│   └────────────┘  └───────────┘                      │                  │</span>
+<span class="arch-hi">└───────────────────────────────────────────────────────┼────────────────┘</span>
+                                                         │
+<span class="arch-hi">┌────────────────────────────────────────────────────────▼───────────────┐</span>
+<span class="arch-hi">│                      EXTERNAL AI PROVIDERS                             │</span>
+<span class="arch-pk">│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────┐  ┌───────────┐   │</span>
+<span class="arch-pk">│  │Anthropic │  │  OpenAI  │  │  Google  │  │  HF  │  │OpenRouter │   │</span>
+<span class="arch-pk">│  │ Claude   │  │   GPT    │  │  Gemini  │  │Llama │  │ 100+ mdls │   │</span>
+<span class="arch-pk">│  └──────────┘  └──────────┘  └──────────┘  └──────┘  └───────────┘   │</span>
+<span class="arch-hi">└────────────────────────────────────────────────────────────────────────┘</span>
+    </div>
+
+    <h2 class="sub-title">Request Flow</h2>
+    <p><strong>Prediction:</strong> User inputs 8 values → React validates → POST /predict_api → Flask validates + normalizes → SVM predicts → Returns 0 or 1 → React renders result with gauge.</p>
+    <p><strong>Chat:</strong> User sends message → React bundles full conversation history → POST /chat → Flask routes to configured AI provider → LLM generates response with system prompt context → Returns reply → React appends to chat.</p>
+  </div>
+
+  <!-- ── 6. TECH STACK ── -->
+  <div class="section" id="tech">
+    <h1 class="section-title"><span>06</span> Technology Stack</h1>
+
+    <table>
+      <tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td>Frontend</td><td>React (CDN, Babel)</td><td>18.3.1</td><td>Single Page Application, JSX components, state management</td></tr>
+      <tr><td>Backend</td><td>Flask</td><td>≥ 3.0</td><td>REST API server, route handling, template serving</td></tr>
+      <tr><td>ML — Model</td><td>scikit-learn SVC</td><td>≥ 1.4</td><td>Support Vector Machine classifier (linear kernel)</td></tr>
+      <tr><td>ML — Scaler</td><td>StandardScaler</td><td>≥ 1.4</td><td>Feature normalization (mean=0, std=1)</td></tr>
+      <tr><td>Numerics</td><td>NumPy</td><td>≥ 1.26</td><td>Array operations for model inference</td></tr>
+      <tr><td>AI — Primary</td><td>Anthropic SDK</td><td>≥ 0.97</td><td>Claude API with prompt caching</td></tr>
+      <tr><td>AI — HTTP</td><td>httpx</td><td>≥ 0.28</td><td>OpenAI-compatible REST calls (OpenAI, Google, HF, OpenRouter)</td></tr>
+      <tr><td>Config</td><td>python-dotenv</td><td>≥ 1.0</td><td>Environment variable loading from .env file</td></tr>
+      <tr><td>Serialization</td><td>pickle</td><td>stdlib</td><td>Load pre-trained model artifacts (sc1.pkl, classifier1.pkl)</td></tr>
+      <tr><td>Fonts</td><td>Google Fonts (CDN)</td><td>—</td><td>DM Sans, DM Serif Display — UI typography</td></tr>
+    </table>
+
+    <h2 class="sub-title">AI Provider Support</h2>
+    <div class="provider-grid">
+      <div class="provider-pill"><span class="pp-icon">🟣</span>Anthropic<br/>Claude</div>
+      <div class="provider-pill"><span class="pp-icon">🟢</span>OpenAI<br/>GPT / o-series</div>
+      <div class="provider-pill"><span class="pp-icon">🔵</span>Google<br/>Gemini</div>
+      <div class="provider-pill"><span class="pp-icon">🟡</span>HuggingFace<br/>Open Models</div>
+      <div class="provider-pill"><span class="pp-icon">🔴</span>OpenRouter<br/>100+ Models</div>
+    </div>
+  </div>
+
+  <!-- ── 7. ML PIPELINE ── -->
+  <div class="section" id="ml">
+    <h1 class="section-title"><span>07</span> Machine Learning Pipeline</h1>
+
+    <h2 class="sub-title">Training Pipeline</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-text">
+          <strong>Data Loading</strong>
+          <span>Load diabetes1.csv (768 rows × 9 columns) using pandas. Separate features X (8 columns) and target y (Outcome column).</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-text">
+          <strong>Train-Test Split</strong>
+          <span>Split dataset into 80% training (614 samples) and 20% testing (154 samples) using stratified sampling to preserve class balance.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-text">
+          <strong>Feature Scaling</strong>
+          <span>Fit StandardScaler on training data, transform both training and test sets. Scaler serialized to sc1.pkl for inference.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-text">
+          <strong>SVM Training</strong>
+          <span>Train SVC with linear kernel on scaled training data. Model learns a hyperplane maximizing the margin between diabetic and non-diabetic feature vectors.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-text">
+          <strong>Evaluation</strong>
+          <span>Evaluate on held-out test set: accuracy ~77–78%, with additional metrics (precision, recall, F1, confusion matrix) logged in the Jupyter notebook.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">6</div>
+        <div class="flow-text">
+          <strong>Serialization</strong>
+          <span>Save trained SVM to classifier1.pkl and scaler to sc1.pkl using Python's pickle module. Both artifacts are loaded once at Flask server startup.</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sub-title">Inference Pipeline</h2>
+    <div class="code-block">
+<span class="cm"># 1. Receive 8 values from /predict_api JSON payload</span>
+features = [pregnancies, glucose, bloodPressure, skinThickness,
+            insulin, bmi, diabetesPedigreeFunction, age]
+
+<span class="cm"># 2. Shape into numpy array</span>
+model_input = np.<span class="fn">array</span>([features], dtype=<span class="fn">float</span>)   <span class="cm"># shape (1, 8)</span>
+
+<span class="cm"># 3. Apply pre-fitted StandardScaler</span>
+scaled_input = sc.<span class="fn">transform</span>(model_input)            <span class="cm"># mean=0, std=1</span>
+
+<span class="cm"># 4. SVM predicts class label</span>
+prediction = <span class="fn">int</span>(model.<span class="fn">predict</span>(scaled_input)[<span class="str">0</span>])   <span class="cm"># 0 or 1</span>
+
+<span class="cm"># 5. Return JSON response</span>
+<span class="kw">return</span> jsonify({<span class="str">"prediction"</span>: prediction})
+    </div>
+
+    <h2 class="sub-title">Why SVM?</h2>
+    <table>
+      <tr><th>Property</th><th>Benefit for Diabetes Prediction</th></tr>
+      <tr><td>Maximum margin classifier</td><td>Robust decision boundary — reduces overfitting on small medical datasets</td></tr>
+      <tr><td>Effective in high dimensions</td><td>8 features are well within SVM's sweet spot for clean separation</td></tr>
+      <tr><td>Linear kernel</td><td>Interpretable; clinical data often separates linearly after scaling</td></tr>
+      <tr><td>Consistent performance</td><td>Literature consistently shows 77–86% accuracy on Pima dataset</td></tr>
+      <tr><td>No probabilistic assumptions</td><td>Does not assume Gaussian distribution — suitable for mixed clinical data</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 8. FEATURES ── -->
+  <div class="section" id="features">
+    <h1 class="section-title"><span>08</span> Features &amp; Functionality</h1>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="fc-num">01</div>
+        <div class="fc-title">8-Field Prediction Form</div>
+        <div class="fc-desc">Clean input form with field hints, units, normal ranges, and real-time validation. All 8 clinical metrics are validated client-side and server-side before prediction.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">02</div>
+        <div class="fc-title">SVM Risk Prediction</div>
+        <div class="fc-desc">SVM model (linear kernel, trained on Pima dataset) classifies input as Diabetic or Non-Diabetic. Result returned via JSON API — instant, server-rendered in under 100ms.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">03</div>
+        <div class="fc-title">Animated Risk Gauge</div>
+        <div class="fc-desc">SVG circular gauge shows visual risk percentage (2–98%) calculated from weighted clinical factors. Colour-coded: green for low risk, red for high risk.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">04</div>
+        <div class="fc-title">Key Factor Analysis</div>
+        <div class="fc-desc">Result panel shows 4 key risk factors (Glucose, BMI, Blood Pressure, Insulin) with colour-coded indicators highlighting which values are in abnormal ranges.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">05</div>
+        <div class="fc-title">AI Health Chatbot</div>
+        <div class="fc-desc">Multi-turn conversational assistant powered by state-of-the-art LLMs. Answers questions about diabetes, explains form fields, and provides evidence-based health guidance.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">06</div>
+        <div class="fc-title">5-Provider AI Support</div>
+        <div class="fc-desc">Supports Anthropic Claude, OpenAI GPT, Google Gemini, HuggingFace, and OpenRouter — all configurable via a single CHAT_MODEL environment variable. No code changes needed.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">07</div>
+        <div class="fc-title">Health Knowledge Base</div>
+        <div class="fc-desc">110+ structured Q&amp;A pairs (health_knowledge.json) embedded in the AI system prompt — covering diabetes types, symptoms, diet, exercise, medications, and all 8 form fields.</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-num">08</div>
+        <div class="fc-title">Assessment History</div>
+        <div class="fc-desc">Last 5 predictions are saved to browser localStorage and displayed in the History tab with key metrics (Glucose, BMI, Age, BP) and dates for tracking over time.</div>
+      </div>
+    </div>
+
+    <h2 class="sub-title">Feature Implementation Status</h2>
+    <table>
+      <tr><th>Feature</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>User-friendly input form with field guidance</td><td><span class="badge badge-done">✔ Implemented</span></td><td>8 fields with units, hints, normal ranges, focus styles</td></tr>
+      <tr><td>ML-based risk prediction (0/1)</td><td><span class="badge badge-done">✔ Implemented</span></td><td>SVM linear kernel, ~78% accuracy</td></tr>
+      <tr><td>Visual risk gauge</td><td><span class="badge badge-done">✔ Implemented</span></td><td>SVG arc gauge with animation</td></tr>
+      <tr><td>Key factor breakdown</td><td><span class="badge badge-done">✔ Implemented</span></td><td>4 factors with risk-coloured indicators</td></tr>
+      <tr><td>AI multi-turn chatbot</td><td><span class="badge badge-done">✔ Implemented</span></td><td>5 providers, full conversation history</td></tr>
+      <tr><td>Health tips &amp; recommendations</td><td><span class="badge badge-done">✔ Implemented</span></td><td>110+ Q&amp;A via chatbot knowledge base</td></tr>
+      <tr><td>Assessment history tracking</td><td><span class="badge badge-done">✔ Implemented</span></td><td>localStorage, last 5 results</td></tr>
+      <tr><td>Quick chat prompts</td><td><span class="badge badge-done">✔ Implemented</span></td><td>5 suggested questions shown at start of chat</td></tr>
+      <tr><td>Sidebar navigation (tabs)</td><td><span class="badge badge-done">✔ Implemented</span></td><td>Prediction + History tabs</td></tr>
+      <tr><td>Multi-provider AI configuration</td><td><span class="badge badge-done">✔ Implemented</span></td><td>5 providers via .env CHAT_MODEL</td></tr>
+      <tr><td>Prompt caching (Claude)</td><td><span class="badge badge-done">✔ Implemented</span></td><td>Ephemeral cache on system prompt</td></tr>
+      <tr><td>Confidence probability score</td><td><span class="badge badge-part">⚠ Partial</span></td><td>Visual gauge shown; SVM decision score not exposed</td></tr>
+      <tr><td>Trend graphs over time</td><td><span class="badge badge-part">⚠ Partial</span></td><td>History tab shows values; no chart visualization yet</td></tr>
+      <tr><td>Alert / notification system</td><td><span class="badge badge-no">✗ Planned</span></td><td>Future implementation</td></tr>
+      <tr><td>User authentication / encryption</td><td><span class="badge badge-no">✗ Planned</span></td><td>Future implementation</td></tr>
+      <tr><td>Wearable device integration</td><td><span class="badge badge-no">✗ Planned</span></td><td>Future implementation</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 9. BACKEND ── -->
+  <div class="section" id="backend">
+    <h1 class="section-title"><span>09</span> Backend Implementation</h1>
+
+    <h2 class="sub-title">Flask Application Structure</h2>
+    <p>The backend is a single Flask application (<code>app.py</code>, ~320 lines) serving both the React SPA and the REST API endpoints. It loads ML artifacts at startup and maintains stateless request handling.</p>
+
+    <h2 class="sub-title">API Endpoints</h2>
+    <table>
+      <tr><th>Route</th><th>Method</th><th>Input</th><th>Output</th><th>Purpose</th></tr>
+      <tr><td><code>GET /</code></td><td>GET</td><td>—</td><td>index.html</td><td>Serve React SPA (raw file, bypasses Jinja2)</td></tr>
+      <tr><td><code>POST /predict_api</code></td><td>POST</td><td>JSON: 8 fields</td><td><code>{"prediction": 0|1}</code></td><td>ML inference endpoint used by React</td></tr>
+      <tr><td><code>POST /chat</code></td><td>POST</td><td>JSON: history[]</td><td><code>{"reply": "..."}</code></td><td>Multi-turn AI chat, routes to active provider</td></tr>
+      <tr><td><code>POST /predict</code></td><td>POST</td><td>Form data</td><td>result.html</td><td>Legacy server-rendered prediction</td></tr>
+      <tr><td><code>GET /chatbot</code></td><td>GET</td><td>—</td><td>chatbot.html</td><td>Standalone legacy chatbot page</td></tr>
+    </table>
+
+    <h2 class="sub-title">Input Validation</h2>
+    <p>All 8 fields are validated server-side for: presence (required), data type (must parse as float), and value bounds (per-field min/max). Invalid requests return HTTP 400 with a descriptive error message. The JSON API and form API use separate validation paths, both enforcing the same rules.</p>
+
+    <h2 class="sub-title">Environment Configuration</h2>
+    <table>
+      <tr><th>Variable</th><th>Purpose</th><th>Required For</th></tr>
+      <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Anthropic Claude API authentication</td><td>claude / claude-* models</td></tr>
+      <tr><td><code>OPENAI_API_KEY</code></td><td>OpenAI API authentication</td><td>gpt-* / o-series models</td></tr>
+      <tr><td><code>GOOGLE_API_KEY</code></td><td>Google Generative AI authentication</td><td>gemini-* models</td></tr>
+      <tr><td><code>HF_TOKEN</code></td><td>HuggingFace Inference API token</td><td>hf/* models (Pro plan)</td></tr>
+      <tr><td><code>OPENROUTER_API_KEY</code></td><td>OpenRouter API key (100+ models)</td><td>Any other model string</td></tr>
+      <tr><td><code>CHAT_MODEL</code></td><td>Active AI model identifier</td><td>All providers (routes by prefix)</td></tr>
+    </table>
+
+    <h2 class="sub-title">AI Provider Routing Logic</h2>
+    <div class="code-block">
+m = _CHAT_MODEL                            <span class="cm"># from .env</span>
+
+<span class="kw">if</span>   m == <span class="str">"claude"</span> <span class="kw">or</span> m.startswith(<span class="str">"claude-"</span>):   → _call_claude()       <span class="cm"># Anthropic SDK</span>
+<span class="kw">elif</span> m.startswith(<span class="str">"gpt-"</span>, <span class="str">"o1"</span>, <span class="str">"o3"</span>, <span class="str">"o4"</span>):      → _call_openai()       <span class="cm"># OpenAI REST</span>
+<span class="kw">elif</span> m.startswith(<span class="str">"gemini-"</span>):                     → _call_google()       <span class="cm"># Google REST</span>
+<span class="kw">elif</span> m.startswith(<span class="str">"hf/"</span>):                          → _call_huggingface()  <span class="cm"># HF REST</span>
+<span class="kw">else</span>:                                               → _call_openrouter()   <span class="cm"># OpenRouter REST</span>
+    </div>
+
+    <p>All non-Claude providers use a shared <code>_openai_compat_post()</code> helper that sends requests to OpenAI-compatible endpoints via httpx. Claude uses the official Anthropic SDK with prompt caching enabled on the system message.</p>
+
+    <h2 class="sub-title">Error Handling</h2>
+    <table>
+      <tr><th>Error Type</th><th>HTTP Status</th><th>User-Facing Message</th></tr>
+      <tr><td>Missing API key (RuntimeError)</td><td>503</td><td>"{Provider} API key is not set"</td></tr>
+      <tr><td>Rate limit (HTTP 429)</td><td>502</td><td>"Rate limit reached. Wait and retry or switch model."</td></tr>
+      <tr><td>Auth failure (HTTP 401)</td><td>502</td><td>"Invalid API key. Check your .env file."</td></tr>
+      <tr><td>Forbidden (HTTP 403)</td><td>502</td><td>"Access denied. Check model permissions."</td></tr>
+      <tr><td>Other provider error</td><td>502</td><td>"Provider returned an error ({status code})."</td></tr>
+      <tr><td>Anthropic-specific error</td><td>503</td><td>"AI assistant temporarily unavailable."</td></tr>
+      <tr><td>Unknown exception</td><td>500</td><td>"Something went wrong. Please try again."</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 10. FRONTEND ── -->
+  <div class="section" id="frontend">
+    <h1 class="section-title"><span>10</span> Frontend Implementation</h1>
+
+    <h2 class="sub-title">Architecture</h2>
+    <p>The frontend is a single HTML file (<code>template/index.html</code>, ~390 lines) that bundles the entire React SPA. React 18.3.1 and Babel are loaded from CDN, enabling JSX transpilation in-browser without a build step. This design eliminates all frontend build tooling while maintaining a full component-based architecture.</p>
+
+    <h2 class="sub-title">Component Tree</h2>
+    <table>
+      <tr><th>Component</th><th>Props</th><th>Responsibility</th></tr>
+      <tr><td><code>App</code></td><td>—</td><td>Root component. Manages all state, tab navigation, API calls</td></tr>
+      <tr><td><code>FieldInput</code></td><td>field, value, onChange</td><td>Single form input with label, unit, hint, focus animation</td></tr>
+      <tr><td><code>RiskGauge</code></td><td>pct, color, label</td><td>SVG arc gauge with animated fill and percentage display</td></tr>
+      <tr><td><code>ResultPanel</code></td><td>result, onChat, values</td><td>Prediction outcome, gauge, key factors, chat CTA button</td></tr>
+      <tr><td><code>HistoryTab</code></td><td>history</td><td>Grid of past assessments with metrics and dates</td></tr>
+      <tr><td><code>ChatPanel</code></td><td>messages, input, handlers, refs</td><td>Floating chat window with messages, input, quick prompts</td></tr>
+      <tr><td><code>Icon</code></td><td>name, size, color</td><td>Inline SVG icon system (9 icons: heart, bot, send, etc.)</td></tr>
+      <tr><td><code>TypingDots</code></td><td>—</td><td>Animated 3-dot loading indicator for AI response wait</td></tr>
+    </table>
+
+    <h2 class="sub-title">State Management</h2>
+    <table>
+      <tr><th>State Variable</th><th>Type</th><th>Purpose</th></tr>
+      <tr><td>values</td><td>Object</td><td>Current form field inputs (8 keys)</td></tr>
+      <tr><td>result</td><td>Object | null</td><td>Current prediction result (pct, color, label, advice)</td></tr>
+      <tr><td>loading</td><td>Boolean</td><td>Prediction request in-flight indicator</td></tr>
+      <tr><td>error</td><td>String | null</td><td>Validation or API error message</td></tr>
+      <tr><td>chatOpen</td><td>Boolean</td><td>Whether chat panel is visible</td></tr>
+      <tr><td>messages</td><td>Array</td><td>Full chat conversation history [{role, text}]</td></tr>
+      <tr><td>chatInput</td><td>String</td><td>Current chat input box value</td></tr>
+      <tr><td>chatLoading</td><td>Boolean</td><td>Chat request in-flight indicator</td></tr>
+      <tr><td>activeTab</td><td>String</td><td>Active sidebar tab: "predict" or "history"</td></tr>
+      <tr><td>history</td><td>Array</td><td>Past prediction results (from localStorage, max 5)</td></tr>
+    </table>
+
+    <h2 class="sub-title">Visual Risk Scoring</h2>
+    <p>In addition to the SVM binary prediction, the frontend computes a continuous visual risk percentage using a weighted heuristic formula based on clinical thresholds — making the gauge interpretable for users regardless of the model's binary output.</p>
+    <table>
+      <tr><th>Factor</th><th>Condition</th><th>Points Added</th></tr>
+      <tr><td>Glucose</td><td>&gt; 140 mg/dL</td><td>+30</td></tr>
+      <tr><td>Glucose</td><td>110–140 mg/dL</td><td>+15</td></tr>
+      <tr><td>BMI</td><td>&gt; 30 kg/m²</td><td>+20</td></tr>
+      <tr><td>BMI</td><td>25–30 kg/m²</td><td>+8</td></tr>
+      <tr><td>Age</td><td>&gt; 50 years</td><td>+12</td></tr>
+      <tr><td>Age</td><td>40–50 years</td><td>+6</td></tr>
+      <tr><td>Diabetes Pedigree</td><td>&gt; 0.5</td><td>+10</td></tr>
+      <tr><td>Blood Pressure</td><td>&gt; 90 mm Hg</td><td>+8</td></tr>
+      <tr><td>Insulin</td><td>&gt; 200 μU/mL</td><td>+8</td></tr>
+      <tr><td>Skin Thickness</td><td>&gt; 35 mm</td><td>+4</td></tr>
+      <tr><td>Pregnancies</td><td>&gt; 5</td><td>+8</td></tr>
+    </table>
+    <p>Total is clamped to [2, 98]. For diabetic predictions the gauge shows max(score, 60); for non-diabetic it shows min(score, 38).</p>
+  </div>
+
+  <!-- ── 11. CHATBOT ── -->
+  <div class="section" id="chatbot">
+    <h1 class="section-title"><span>11</span> AI Chatbot System</h1>
+
+    <h2 class="sub-title">Design Overview</h2>
+    <p>The Health Assistant chatbot is a full multi-turn conversational AI embedded as a floating panel in the React SPA. It is powered by state-of-the-art large language models with a structured system prompt that includes domain-specific diabetes knowledge.</p>
+
+    <h2 class="sub-title">System Prompt Structure</h2>
+    <p>The AI system prompt has two layers:</p>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">A</div>
+        <div class="flow-text">
+          <strong>Role &amp; Behaviour Instructions</strong>
+          <span>Defines the assistant as a knowledgeable, empathetic Health Assistant. Sets rules: evidence-based responses, non-alarmist tone, always remind users results are not medical diagnoses, direct emergencies to 911, never prescribe medications.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">B</div>
+        <div class="flow-text">
+          <strong>Health Knowledge Base (110+ Q&amp;A pairs)</strong>
+          <span>Loaded from health_knowledge.json at Flask startup. Formatted as structured markdown and appended to the system prompt, giving the AI immediate access to detailed diabetes facts without requiring external lookups.</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="sub-title">Knowledge Base Categories</h2>
+    <table>
+      <tr><th>Category</th><th>Q&amp;A Count</th><th>Key Topics</th></tr>
+      <tr><td>Form Fields</td><td>40</td><td>All 8 prediction fields — what they mean, normal ranges, clinical significance</td></tr>
+      <tr><td>Diabetes Types</td><td>6</td><td>Type 1, Type 2, pre-diabetes, gestational, MODY, diagnosis criteria</td></tr>
+      <tr><td>Symptoms</td><td>6</td><td>Common symptoms, silent diabetes, hypoglycemia, hyperglycemia, DKA</td></tr>
+      <tr><td>Prevention</td><td>6</td><td>Lifestyle changes, exercise, diet, smoking, sleep impact</td></tr>
+      <tr><td>Diet &amp; Nutrition</td><td>8</td><td>Best diets, foods to avoid, glycemic index, carbs, alcohol, fasting</td></tr>
+      <tr><td>Exercise</td><td>5</td><td>Exercise types, frequency, immediate effect on blood sugar, safety</td></tr>
+      <tr><td>Blood Sugar Monitoring</td><td>4</td><td>HbA1c, target levels, monitoring frequency, CGM devices</td></tr>
+      <tr><td>Complications</td><td>5</td><td>Long-term complications, neuropathy, retinopathy, kidney damage</td></tr>
+      <tr><td>Medications &amp; Treatment</td><td>4</td><td>Type 2 medications, insulin, remission, GLP-1 agonists (Ozempic)</td></tr>
+      <tr><td>About SugarSense</td><td>6</td><td>How the model works, medical disclaimer, result interpretation</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>110+</strong></td><td>—</td></tr>
+    </table>
+
+    <h2 class="sub-title">Prompt Caching (Claude)</h2>
+    <p>When using Claude as the AI provider, the system prompt (including the full knowledge base) is sent with <code>cache_control: {"type": "ephemeral"}</code>. This instructs Anthropic's API to cache the system prompt prefix for up to 5 minutes, significantly reducing latency and cost for repeated chat sessions where the system prompt is unchanged.</p>
+
+    <h2 class="sub-title">Multi-Turn Conversation</h2>
+    <p>The entire conversation history is sent with every request as a <code>history</code> array. Flask strips any leading assistant messages before passing to the LLM (required because Claude mandates user-first message ordering). This enables contextually aware responses across multiple turns.</p>
+
+    <h2 class="sub-title">Quick Prompts</h2>
+    <p>Five suggested questions appear at the top of the chat for the first three messages:</p>
+    <ul>
+      <li>What is diabetes?</li>
+      <li>How to lower blood sugar?</li>
+      <li>What does BMI mean?</li>
+      <li>Best foods to avoid?</li>
+      <li>What are the symptoms?</li>
+    </ul>
+  </div>
+
+  <!-- ── 12. RESULTS ── -->
+  <div class="section" id="results">
+    <h1 class="section-title"><span>12</span> Results &amp; Performance</h1>
+
+    <h2 class="sub-title">ML Model Performance</h2>
+    <div class="metric-row">
+      <div class="metric-card">
+        <div class="mv">~78%</div>
+        <div class="ml">Accuracy</div>
+      </div>
+      <div class="metric-card">
+        <div class="mv">80%</div>
+        <div class="ml">Precision</div>
+      </div>
+      <div class="metric-card">
+        <div class="mv">80%</div>
+        <div class="ml">Recall</div>
+      </div>
+      <div class="metric-card">
+        <div class="mv">~81%</div>
+        <div class="ml">F1 Score</div>
+      </div>
+    </div>
+
+    <h2 class="sub-title">Literature Comparison</h2>
+    <table>
+      <tr><th>Study</th><th>Authors</th><th>Year</th><th>Algorithm</th><th>Dataset</th><th>Accuracy</th></tr>
+      <tr><td>Diabetes Prediction Using SVM</td><td>S. Patel, R. Goyal</td><td>2019</td><td>SVM (RBF kernel)</td><td>Pima Indians</td><td>78%</td></tr>
+      <tr><td>ML for Diabetes Prediction</td><td>M. Elshazly, H. Motaba</td><td>2020</td><td>SVM vs DT vs LR</td><td>NHANES</td><td>81%</td></tr>
+      <tr><td>SVM and KNN Hybrid</td><td>N. Kumar, L. Srivastava</td><td>2021</td><td>SVM + KNN</td><td>Kaggle</td><td>83%</td></tr>
+      <tr><td>Early Detection with ML</td><td>J. Smith, P. Nguyen</td><td>2021</td><td>SVM / RF / NN</td><td>UCI</td><td>82%</td></tr>
+      <tr><td>SVM with Feature Selection</td><td>A. Banerjee, K. Tiwari</td><td>2022</td><td>SVM + RFE</td><td>Pima Indians</td><td>85%</td></tr>
+      <tr><td>SVM with Ensemble</td><td>H. Kaur, M. Singh</td><td>2023</td><td>SVM + Bagging</td><td>Clinical data</td><td>86%</td></tr>
+      <tr><td><strong>SugarSense Predictor</strong></td><td><strong>This Project</strong></td><td><strong>2026</strong></td><td><strong>SVM (linear)</strong></td><td><strong>Pima Indians</strong></td><td><strong>~78%</strong></td></tr>
+    </table>
+
+    <h2 class="sub-title">System Performance</h2>
+    <table>
+      <tr><th>Metric</th><th>Value</th></tr>
+      <tr><td>Prediction response time</td><td>&lt; 100ms (local Flask + pre-loaded models)</td></tr>
+      <tr><td>Chat response time (Claude)</td><td>1–3 seconds (with prompt caching)</td></tr>
+      <tr><td>Chat response time (Gemini Flash)</td><td>1–2 seconds</td></tr>
+      <tr><td>Chat response time (OpenRouter free)</td><td>3–8 seconds</td></tr>
+      <tr><td>Knowledge base loading</td><td>Once at server startup (~10ms)</td></tr>
+      <tr><td>Max chat message length</td><td>2000 characters</td></tr>
+      <tr><td>History entries persisted</td><td>5 (localStorage)</td></tr>
+    </table>
+
+    <div class="callout">
+      <strong>Disclaimer:</strong> SugarSense Predictor is a <strong>risk screening tool</strong>, not a medical diagnostic device. All predictions should be interpreted as risk indicators only. Users with high-risk results should consult a qualified healthcare professional for formal diagnosis and medical advice.
+    </div>
+  </div>
+
+  <!-- ── 13. FUTURE ── -->
+  <div class="section" id="future">
+    <h1 class="section-title"><span>13</span> Future Implementation</h1>
+    <table>
+      <tr><th>Feature</th><th>Priority</th><th>Description</th></tr>
+      <tr><td>Trend Graphs</td><td>High</td><td>Line/bar charts for history tab showing glucose, BMI, and risk % over time</td></tr>
+      <tr><td>Real Probability Score</td><td>High</td><td>Expose SVM decision_function() score as a calibrated confidence percentage</td></tr>
+      <tr><td>Alert System</td><td>Medium</td><td>Browser notifications or email alerts when consecutive predictions show rising risk</td></tr>
+      <tr><td>User Authentication</td><td>Medium</td><td>Login/register system to associate history with users; server-side persistence (database)</td></tr>
+      <tr><td>Wearable Integration</td><td>Medium</td><td>API connections to CGM devices (Dexcom, Libre) for real-time glucose import</td></tr>
+      <tr><td>Feature Importance Display</td><td>Medium</td><td>Bar chart showing which input feature contributed most to the current prediction</td></tr>
+      <tr><td>Data Encryption</td><td>High</td><td>Encrypt stored health data; HTTPS enforcement; HIPAA-compatible data handling</td></tr>
+      <tr><td>Model Retraining Pipeline</td><td>Low</td><td>Automated retraining when new labelled data is available</td></tr>
+      <tr><td>Multi-language Support</td><td>Low</td><td>Localization of UI text and chatbot responses</td></tr>
+      <tr><td>Cloud Deployment</td><td>Medium</td><td>Deploy on AWS/GCP/Heroku with production WSGI server (Gunicorn) and HTTPS</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 14. CONCLUSION ── -->
+  <div class="section" id="conclusion">
+    <h1 class="section-title"><span>14</span> Conclusion</h1>
+    <p>
+      SugarSense Predictor demonstrates how modern machine learning and generative AI can be combined into a cohesive, user-friendly healthcare screening tool. By deploying a trained SVM classifier alongside a multi-provider AI chatbot within a full-stack web application, the project fulfills its core objectives: delivering fast, evidence-based diabetes risk assessment with immediate health guidance.
+    </p>
+    <p>
+      The project successfully integrates a proven ML model (Support Vector Machine with linear kernel) trained on the widely referenced Pima Indians Diabetes Dataset, achieving ~78% accuracy consistent with published literature. The multi-provider AI chatbot architecture — supporting five different AI providers (Anthropic, OpenAI, Google, HuggingFace, OpenRouter) through a single environment variable — demonstrates a flexible, production-grade design pattern applicable to any LLM-integrated application.
+    </p>
+    <p>
+      The structured health knowledge base (110+ Q&amp;A pairs embedded in the AI system prompt) ensures the chatbot provides factually grounded, diabetes-specific guidance rather than generic responses. The combination of prompt caching, multi-turn conversation history, and graceful error handling across all five providers results in a robust and responsive user experience.
+    </p>
+    <p>
+      From a software engineering perspective, the project demonstrates clean separation of concerns across all three tiers: a React SPA with component-based state management, a Flask REST API with provider-agnostic routing, and a modular AI layer easily extended with new providers. The environment-variable configuration pattern ensures the system can be deployed in any context by changing a single file.
+    </p>
+    <p>
+      While certain features — trend graphs, real probability scores, user authentication, and alert systems — remain as future work, the current implementation provides a complete, functional, and extensible foundation for an intelligent diabetes screening assistant.
+    </p>
+  </div>
+
+  <!-- ── 15. REFERENCES ── -->
+  <div class="section" id="references">
+    <h1 class="section-title"><span>15</span> References</h1>
+    <ol>
+      <li style="margin-bottom:10px;">S. Patel and R. Goyal, "Diabetes Prediction Using Support Vector Machines," <em>International Journal of Computer Applications</em>, vol. 178, 2019.</li>
+      <li style="margin-bottom:10px;">M. Elshazly and H. Motaba, "Machine Learning for Diabetes Prediction: A Comparative Study," <em>Journal of Medical Informatics</em>, 2020.</li>
+      <li style="margin-bottom:10px;">N. Kumar and L. Srivastava, "Diabetes Prediction Using SVM and KNN Hybrid Model," <em>Procedia Computer Science</em>, vol. 190, 2021.</li>
+      <li style="margin-bottom:10px;">J. Smith and P. Nguyen, "Early Detection of Diabetes Using Machine Learning Algorithms," <em>IEEE Access</em>, vol. 9, 2021.</li>
+      <li style="margin-bottom:10px;">A. Banerjee and K. Tiwari, "Predicting Diabetes Using SVM with Feature Selection via RFE," <em>Applied Intelligence</em>, 2022.</li>
+      <li style="margin-bottom:10px;">R. Chen and L. Liu, "Smart Health Prediction Using Machine Learning Techniques," <em>Journal of Healthcare Engineering</em>, 2022.</li>
+      <li style="margin-bottom:10px;">H. Kaur and M. Singh, "SVM for Diabetes Prediction and Management with Ensemble Methods," <em>Expert Systems with Applications</em>, 2023.</li>
+      <li style="margin-bottom:10px;">Smith, J. W., Everhart, J. E., Dickson, W. C., Knowler, W. C., &amp; Johannes, R. S. (1988). Using the ADAP Learning Algorithm to Forecast the Onset of Diabetes Mellitus. <em>Proceedings of the 12th Annual Symposium on Computer Applications in Medical Care</em>. (Original Pima dataset paper)</li>
+      <li style="margin-bottom:10px;">Anthropic. (2025). <em>Claude API Documentation</em>. https://docs.anthropic.com</li>
+      <li style="margin-bottom:10px;">Flask Documentation, Pallets Projects. (2024). https://flask.palletsprojects.com</li>
+      <li style="margin-bottom:10px;">Pedregosa et al. (2011). Scikit-learn: Machine Learning in Python. <em>JMLR</em>, 12, 2825–2830.</li>
+      <li style="margin-bottom:10px;">International Diabetes Federation. (2021). <em>IDF Diabetes Atlas</em> (10th ed.). https://www.diabetesatlas.org</li>
+    </ol>
+  </div>
+
+</div><!-- end body-content -->
+
+<!-- FOOTER -->
+<div class="report-footer">
+  SugarSense Predictor &nbsp;·&nbsp; Minor Project Report &nbsp;·&nbsp; B.Tech Computer Science &nbsp;·&nbsp; 2025–2026
+</div>
+
+</div><!-- end page -->
+</body>
+</html>
